@@ -20,15 +20,16 @@ import java.util.Objects;
 @Component
 public class ApplicationImplementation implements ApplicationService {
 
-    @Value(value = "${app.test-files.directory:app/test-files}")
+    @Value(value = "${app.test-files.directory:/app/test-files}")
     private String applicationTestFilesDirectory;
 
     public List<ResponseDto> serveRequest(RequestDto requestDto) {
         File file = new File(applicationTestFilesDirectory);
-        File textRecordFile = Arrays.stream(Objects.requireNonNull(file.listFiles()))
+        File[] fileList = file.listFiles();
+        File textRecordFile = fileList != null ? Arrays.stream(fileList)
                 .filter(f -> f.getName().equals(requestDto.getFilename()))
                 .findFirst()
-                .orElse(null);
+                .orElse(null) : null;
 
         return textRecordFile != null && requestDtoIsValid(requestDto) ?
                 createTextRecordResponse(requestDto, textRecordFile) :
