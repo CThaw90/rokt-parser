@@ -29,7 +29,7 @@ task copy {
             into './'
 
             rename { String fileName ->
-                fileName.replace('rokt-parser-' + version + '.jar', 'rokt-parer.jar')
+                fileName.replace('rokt-parser-' + version + '.jar', 'rokt-parser.jar')
             }
         }
     }
