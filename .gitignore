@@ -1,0 +1,13 @@
+# JetBrains
+# =======
+.idea/
+
+# Gradle
+# =======
+.gradle/
+
+# Application
+# =======
+app/
+build/
+*.jar
