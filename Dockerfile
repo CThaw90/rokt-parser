@@ -1,4 +1,4 @@
-FROM openjdk:17.0.1
+FROM openjdk:11.0
 
 WORKDIR /usr/src/myapp
 COPY . .
