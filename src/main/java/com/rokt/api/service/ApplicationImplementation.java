@@ -22,6 +22,14 @@ public class ApplicationImplementation implements ApplicationService {
     @Value(value = "${app.test-files.directory:/app/test-files}")
     private String applicationTestFilesDirectory;
 
+    private final Transformer transformer;
+    private final Validator validator;
+
+    public ApplicationImplementation(Transformer transformer, Validator validator) {
+        this.transformer = transformer;
+        this.validator = validator;
+    }
+
     public List<ResponseDto> serveRequest(RequestDto requestDto) {
         File file = new File(applicationTestFilesDirectory);
         File[] fileList = file.listFiles();
@@ -36,22 +44,22 @@ public class ApplicationImplementation implements ApplicationService {
     }
 
     private boolean requestDtoIsValid(RequestDto requestDto) {
-        return Validator.isISOFormat(requestDto.getFrom()) && Validator.isISOFormat(requestDto.getTo());
+        return validator.isISOFormat(requestDto.getFrom()) && validator.isISOFormat(requestDto.getTo());
     }
 
     private List<ResponseDto> createTextRecordResponse(RequestDto requestDto, File file) {
         List<ResponseDto> responseDtoList = new ArrayList<>();
-        LocalDateTime startDateTime = Transformer.toLocalDateTime(requestDto.getFrom());
-        LocalDateTime endDateTime = Transformer.toLocalDateTime(requestDto.getTo());
+        LocalDateTime startDateTime = transformer.toLocalDateTime(requestDto.getFrom());
+        LocalDateTime endDateTime = transformer.toLocalDateTime(requestDto.getTo());
         try {
-            if (Validator.isValidDateRange(startDateTime, endDateTime)) {
+            if (validator.isValidDateRange(startDateTime, endDateTime)) {
                 FileReader fileReader = new FileReader(file);
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
                 String line;
                 while ((line = bufferedReader.readLine()) != null) {
-                    TextRecordEntity textRecordEntity = Transformer.toTextRecordEntity(line);
+                    TextRecordEntity textRecordEntity = transformer.toTextRecordEntity(line);
                     if (dateIsContainedWithinRange(textRecordEntity.getDate(), startDateTime, endDateTime)) {
-                        responseDtoList.add(Transformer.toResponseDto(textRecordEntity));
+                        responseDtoList.add(transformer.toResponseDto(textRecordEntity));
                     }
                     // Short circuit reading the file if dates after endDateTime is reached
                     else if (textRecordEntity.getDate().isAfter(endDateTime)) {
