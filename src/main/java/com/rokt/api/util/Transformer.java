@@ -31,7 +31,7 @@ public class Transformer {
         ResponseDto responseDto = new ResponseDto();
         responseDto.setEmail(textRecordEntity.getEmail());
         responseDto.setSessionId(textRecordEntity.getSessionId());
-        responseDto.setEventTime(textRecordEntity.getDate().toString());
+        responseDto.setEventTime(textRecordEntity.getDate().toString().concat("Z"));
 
         return responseDto;
     }

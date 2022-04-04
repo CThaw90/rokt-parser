@@ -3,7 +3,6 @@ package com.rokt.api;
 import com.rokt.api.dto.RequestDto;
 import com.rokt.api.dto.ResponseDto;
 import com.rokt.api.service.ApplicationService;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

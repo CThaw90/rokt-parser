@@ -1,5 +1,7 @@
 package com.rokt.api.dto;
 
+import java.util.Objects;
+
 public class ResponseDto {
 
     private String eventTime;
@@ -28,5 +30,18 @@ public class ResponseDto {
 
     public String getSessionId() {
         return sessionId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ResponseDto that = (ResponseDto) o;
+        return Objects.equals(eventTime, that.eventTime) && Objects.equals(email, that.email) && Objects.equals(sessionId, that.sessionId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(eventTime, email, sessionId);
     }
 }
