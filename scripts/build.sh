@@ -1,2 +1,2 @@
 #!/bin/bash -ex
-docker build -t rokt-parser:latest
+docker build -t rokt-parser:latest ./
