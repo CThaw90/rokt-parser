@@ -21,12 +21,11 @@ public class ApplicationImplementationTest {
         requestDto.setFilename("sample1.txt");
         requestDto.setFrom("2000-01-01T02:38:29Z");
         requestDto.setTo("2000-06-07T23:00:00Z");
-        MockedConstruction<File> mockedFile = Mockito.mockConstruction(File.class, (mock, context) ->
-                Mockito.when(mock.listFiles()).thenReturn(null));
-        List<ResponseDto> results = applicationImplementation.serveRequest(requestDto);
-        Assertions.assertEquals(0, results.size());
-
-        mockedFile.close();
+        try (MockedConstruction<File> mockedFile = Mockito.mockConstruction(File.class, (mock, context) ->
+                Mockito.when(mock.listFiles()).thenReturn(null))) {
+            List<ResponseDto> results = applicationImplementation.serveRequest(requestDto);
+            Assertions.assertEquals(0, results.size());
+        }
     }
 
     @Test
@@ -48,13 +47,11 @@ public class ApplicationImplementationTest {
         requestDto.setFrom("2000-01-01T02:38:29Z");
         requestDto.setTo("2000-06-07T23:00:00Z");
 
-        MockedConstruction<File> mockedFile = Mockito.mockConstruction(File.class, (mock, context) ->
-                Mockito.when(mock.listFiles()).thenReturn(fileList));
-
-        List<ResponseDto> results = applicationImplementation.serveRequest(requestDto);
-        Assertions.assertEquals(0, results.size());
-
-        mockedFile.close();
+        try (MockedConstruction<File> mockedFile = Mockito.mockConstruction(File.class, (mock, context) ->
+                Mockito.when(mock.listFiles()).thenReturn(fileList))) {
+            List<ResponseDto> results = applicationImplementation.serveRequest(requestDto);
+            Assertions.assertEquals(0, results.size());
+        }
     }
 
     @Test
@@ -76,12 +73,11 @@ public class ApplicationImplementationTest {
         requestDto.setFrom("2000-01-01");
         requestDto.setTo("2000-06-07T23:00:00Z");
 
-        MockedConstruction<File> mockedFile = Mockito.mockConstruction(File.class, (mock, context) ->
-                Mockito.when(mock.listFiles()).thenReturn(fileList));
-        List<ResponseDto> results = applicationImplementation.serveRequest(requestDto);
-        Assertions.assertEquals(0, results.size());
-
-        mockedFile.close();
+        try (MockedConstruction<File> mockedFile = Mockito.mockConstruction(File.class, (mock, context) ->
+                Mockito.when(mock.listFiles()).thenReturn(fileList))) {
+            List<ResponseDto> results = applicationImplementation.serveRequest(requestDto);
+            Assertions.assertEquals(0, results.size());
+        }
     }
 
     @Test
